@@ -12,6 +12,9 @@ import {AuthContext} from '../../context/AuthContext';
 const Feed = () => {
     const [posts, setPosts] = useState([]);
     const { user } = useContext(AuthContext);
+    const [loading, setLoading] = useState(true);
+    const [refresh, setRefresh] = useState(false);
+    const [refreshForLikes, setRefreshForLikes] = useState(false);
 
 
     useEffect(() => {
@@ -20,15 +23,17 @@ const Feed = () => {
             const res = await api.get('/all-posts'); 
             console.log('Fetched posts:', res.data.posts);
             setPosts(res.data.posts);
+            setLoading(false); // Stop loading after data is fetched
+            
         } catch (error) {
             console.log('Error fetching posts:', error.message);
         }
     }
     fetchPosts();
-    }, [posts.length])
+    }, [refresh, refreshForLikes]);
 
 //   const { posts, loading } = useAppSelector((state) => state.posts)
- const loading = false;
+ 
   if (loading) {
     return (
       <div className="space-y-8">
@@ -82,7 +87,7 @@ const Feed = () => {
         </div>
       </motion.div>
 
-      <PostCreation />
+      <PostCreation onPostCreated={() => setRefresh(prev => !prev)} />
       <FeedFilters />
       
       {/* Featured Live Poll */}
@@ -133,7 +138,7 @@ const Feed = () => {
             className="hover-lift"
           >
             <Post
-              id={post.id}
+              id={post._id}
               userId={post.userId}
               content={post.content}
               image={post.image}
@@ -142,6 +147,7 @@ const Feed = () => {
               updatedAt={post.updatedAt}
               likes={post.likes}
               comments={post.comments}
+              onLike={() => setRefreshForLikes(prev => !prev)}
             />
           </motion.div>
         ))}

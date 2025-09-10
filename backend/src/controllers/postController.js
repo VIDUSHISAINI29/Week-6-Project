@@ -67,7 +67,7 @@ export const updatePost = async(req, res) => {
 
 export const getAllPosts = async(req, res) => {
     try {
-        const allPosts = await Post.find();
+        const allPosts = await Post.find().sort({ createdAt: -1 });
         if(!allPosts) return res.status(404).json({message: "No post found."});
 
         res.status(200).json({posts: allPosts});

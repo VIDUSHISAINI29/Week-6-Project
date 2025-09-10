@@ -5,6 +5,7 @@ import userRoutes from './userRoutes.js';
 import jobRoutes from './jobRoutes.js';
 import postRoutes from './postRoutes.js';
 import messageRoutes from './messageRoutes.js';
+import connectionRoutes from './connectionRoutes.js'
 
 const router = Router();
 
@@ -13,5 +14,6 @@ router.use('/', userRoutes);
 router.use('/', jobRoutes);
 router.use('/', postRoutes);
 router.use('/',messageRoutes);
+router.use('/',connectionRoutes);
 
 export default router;

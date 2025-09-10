@@ -67,7 +67,7 @@ const LeftSidebar = () => {
               >
                 <Avatar className="w-20 h-20 border-4 border-white shadow-xl ring-4 ring-blue-400/30">
                   <AvatarImage
-                    src="https://images.unsplash.com/photo-1655249481446-25d575f1c054?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMHdvbWFufGVufDF8fHx8MTc1NjkxMjcwNHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                    src={user.profilePic}
                     alt={user.name}
                   />
                   <AvatarFallback className="text-xl font-semibold text-white gradient-primary">

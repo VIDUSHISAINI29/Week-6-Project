@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { motion } from 'framer-motion'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Linkedin } from 'lucide-react'
 import Button from '../components/ui/Button.jsx'
 import Input  from '../components/ui/Input.jsx'
@@ -49,12 +49,12 @@ const SignIn = () => {
   return (
     <div className="relative flex items-center justify-center min-h-screen p-4 overflow-hidden">
       {/* Background Effects */}
-      <div className="fixed inset-0 -z-10">
+      {/* <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50" />
         <div className="absolute top-0 left-0 rounded-full w-96 h-96 bg-gradient-to-br from-blue-400/30 to-purple-400/30 blur-3xl animate-pulse" />
         <div className="absolute bottom-0 right-0 delay-1000 rounded-full w-96 h-96 bg-gradient-to-br from-indigo-400/30 to-pink-400/30 blur-3xl animate-pulse" />
         <div className="absolute w-64 h-64 delay-500 transform -translate-x-1/2 -translate-y-1/2 rounded-full top-1/2 left-1/2 bg-gradient-to-br from-cyan-400/20 to-blue-400/20 blur-2xl animate-pulse" />
-      </div>
+      </div> */}
 
       <motion.div
         initial={{ opacity: 0, y: 20, scale: 0.9 }}
@@ -190,7 +190,7 @@ const SignIn = () => {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full mt-3 mb-10 gradient-primary hover:gradient-primary/90 hover-lift group"
+              className="w-full gradient-primary hover:gradient-primary/90 hover-lift group"
             >
               {isLoading ? (
                 <div className="flex items-center">
@@ -220,8 +220,23 @@ const SignIn = () => {
               </Button>
             </p>
           </div> */}
+            <div className="text-center ">
+            <p className="text-sm text-muted-foreground">
+              Already have account?{' '}
+             <Link to="/login">
+              <Button
+                variant="link"
+                className="h-auto p-0 gradient-text hover:no-underline"
+              >
+                Login now
+              </Button>
+             </Link>
+            </p>
+          </div>
         </Card>
+
       </motion.div>
+      
     </div>
   )
 }

@@ -17,7 +17,7 @@ import { toast } from "sonner";
 import { AuthContext } from "../../context/AuthContext";
 import { api } from "../../utils/axios.js";
 
-const PostCreation = () => {
+const PostCreation = ({onPostCreated }) => {
    const { user } = useContext(AuthContext);
    const [content, setContent] = useState("");
    const [isExpanded, setIsExpanded] = useState(false);
@@ -47,6 +47,7 @@ const PostCreation = () => {
          reader.onload = async () => {
             const base64Image = reader.result;
             setIsImage(true);
+            setIsExpanded(true)
 
             setPostData({ ...postData, image: base64Image });
          };
@@ -63,11 +64,34 @@ const PostCreation = () => {
       }
    };
 
+     const cancelFunction = () => {
+        setIsExpanded(false);
+        setIsImage(false);
+        setIsImageOrVideo(false);
+        setDisablePostButton(true);
+    setPostData({
+        userId: "",
+        content: "",
+        image: ""})
+   }
+
+   const refreshFields = () => {
+        setIsImage(false);
+      setIsImageOrVideo(false)
+      setDisablePostButton(true);
+       setPostData({
+        userId: "",
+        content: "",
+        image: ""})
+   }
+
    const createPostFunction = async () => {
       try {
          const payload = { ...postData, userId: user._id };
          const res = await api.post("/create-post", payload);
          console.log("Post created:", res.data.post);
+         onPostCreated();
+         refreshFields()
       } catch (error) {
          console.log("Error creating post:", error.message);
       }
@@ -80,14 +104,7 @@ const PostCreation = () => {
       }
    }, [postData]);
 
-   const cancelFunction = () => {
-        setIsExpanded(false);
-        setIsImage(true);
-    setPostData({
-        userId: "",
-        content: "",
-        image: ""})
-   }
+ 
 
    const mediaOptions = [
       {
@@ -123,7 +140,7 @@ const PostCreation = () => {
                      transition={{ type: "spring", stiffness: 300 }}>
                      <Avatar className="w-16 h-16 transition-all duration-300 shadow-lg ring-3 ring-white/60 hover:ring-blue-400/50">
                         <AvatarImage
-                           src={user.profilePic || "/src/assets/react.svg"}
+                           src={user.profilePic}
                            alt={user.name}
                         />
                         <AvatarFallback className="text-xl font-semibold text-white gradient-primary">
@@ -161,7 +178,7 @@ const PostCreation = () => {
                               />
                            </div>
                         )}
-                        {isVideo && (
+                        {/* {isVideo && (
                            <div className="relative mt-4 overflow-hidden rounded-lg shadow-lg">
                               <video
                                  controls
@@ -173,7 +190,7 @@ const PostCreation = () => {
                                  Your browser does not support the video tag.
                               </video>
                            </div>
-                        )}
+                        )} */}
                      </div>
 
                      {/* 
